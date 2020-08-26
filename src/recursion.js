@@ -172,11 +172,15 @@ var fizzBuzz = function(n) {
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  if (!array.length) return 0;
+  return (array[0] === value) + countOccurrence(array.slice(1), value);
 };
 
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  if (!array.length) return [];
+  return [callback(array[0]), ...rMap(array.slice(1), callback)];
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -218,11 +222,15 @@ var nthFibo = function(n) {
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(array) {
+  if (!array.length) return [];
+  return [array[0].toUpperCase(), ...capitalizeWords(array.slice(1))];
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
+  if (!array.length) return [];
+  return [array[0].charAt(0).toUpperCase() + array[0].slice(1), ...capitalizeFirst(array.slice(1))];
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
@@ -240,6 +248,16 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+  if (!array.length) return [];
+  let result = [];
+  for (let i of array) {
+    if (Array.isArray(i)) {
+      result.push(...flatten(i));
+    } else {
+      result.push(i);
+    }
+  }
+  return result;
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
